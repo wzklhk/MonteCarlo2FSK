@@ -21,6 +21,4 @@ function code_recv = FSKSystem(code_send, SNR_dB)
 
     % decode
     code_recv = Decode(signal_recv, Ts);
-    
-    subplot(2, 2, 1);
 end
