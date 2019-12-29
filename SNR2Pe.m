@@ -1,26 +1,18 @@
 function Pe = SNR2Pe(SNR_dB)
-    % InPeut SNR dB
-    % OutPeut Pee
+    % Input SNR dB
+    % Output Pe
 
     N = 1000;
-    Eb = 1;
 
     for i = 1:length(SNR_dB)
         % code_send generation
-        code_send = SignalGenerator(N);
+        code_send = CodeGenerator(N);
 
-        % 2FSK modulation
-        [s1, s2] = FSKModulation(code_send, N, Eb);
-
-        % Add noise
-        n1 = awgn(s1, SNR_dB(i));
-        n2 = awgn(s2, SNR_dB(i));
-
-        % 2FSK demodulation
-        code_recv = FSKDemodulation(n1, n2, N);
+        % code recv
+        code_recv = FSKSystem(code_send, SNR_dB(i));
 
         % compute Pe
-        Pe(i) = CountingErr(code_send, code_recv, N);
+        Pe(i) = CountingErr(code_send, code_recv);
     end
 
 end
